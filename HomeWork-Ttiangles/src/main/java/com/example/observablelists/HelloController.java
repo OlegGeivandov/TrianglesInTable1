@@ -40,9 +40,10 @@ public class HelloController {
     Button saveBtn;
     //ObservableList<ObservableTriangles> triangles = FXCollections.observableArrayList();
 
-    public void initialize() throws IOException {
-        loadFromFile();
+    @FXML
+    Button btnSaveXLS;
 
+    public void initialize() throws IOException {
         triangles.addListener((ListChangeListener<ObservableTriangles>) change -> {
             while (change.next())  {
                 if(change.wasAdded()){
@@ -59,14 +60,14 @@ public class HelloController {
                 }
             }
         });
-
+        loadFromFile();
         initTable();
 
-
+        btnSaveXLS.setOnAction(actionEvent -> ExcelSaver.save(triangles, "C:\\trrr.xls"));
 
     }
     public void loadFromFile() throws IOException {
-        List<String> list = readAllLines(new File("triangles.txt").toPath(), Charset.forName("UTF-8"));
+        List<String> list = readAllLines(new File("HomeWork-Ttiangles/triangles.txt").toPath(), Charset.forName("UTF-8"));
         loadTriangles(list);
     }
     public void loadTriangles(List<String> lines){
